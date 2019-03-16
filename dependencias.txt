@@ -1,2 +1,0 @@
-sudo apt-get update && sudo apt-get install ruby sqlite3 ruby-railties
-sudo apt-get install ruby-dev rdoc irb libxslt-dev libxml2-dev zlib1g-dev 
