@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title></title>
+        <title>Monitor Sensor</title>
     </head>
     <body>
         <header>
@@ -19,13 +19,16 @@
             </div>
         </header>
         <section>
-                <div class="card">
-                        <div class="card-body">
-                            <div id="temperature-filters">
-                                
-                            </div>
-                        </div>
+            <div class="card">
+                <div class="card-body">
+                    <div id="temperature-filters">
+                        <label>Data Inicial</label>
+                        <input type="date" id="date-begin" name="date-begin">
+                        <label>Data Final</label>
+                        <input type="date" id="date-end" name="date-end">
                     </div>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <div id="temperature-chart"></div>
@@ -35,5 +38,43 @@
         <footer id="copyright">
             <span class="">Copyright - PackID 2018</span>
         </footer>
+        <script type="text/javascript" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+        <script type="text/javascript">
+            function loadData(data) {
+                console.log(data);
+            }
+
+            function requestData () {
+                let url = "localhost:3000";
+                let request = new XMLHttpRequest();
+                if (!request) {
+                    alert("Erro ao fazer requisição de dados.");
+                    return;
+                }
+
+                request.onreadystatechange = alert(request);
+                request.open("GET", url, true);
+                request.send();
+            }
+
+            var alert = function (request) {
+                try{
+                    if(request.readyState === 4) {
+                        if(request.status === 200)
+                            loadData(request.responseText);
+                        else
+                            alert("Problema ao fazer requisição.");
+                    }
+                }catch (e) {
+                    alert("Exceção: " + e.description);
+                }
+            }
+
+            window.onload = function() 
+            { 
+                requestData();
+            }
+
+        </script>
     </body>
 </html>
