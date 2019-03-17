@@ -45,7 +45,7 @@
             }
 
             function requestData () {
-                let url = "localhost:3000";
+                let url = "http://localhost/packid-web-dev-challenge/application/server.php";
                 let request = new XMLHttpRequest();
                 if (!request) {
                     alert("Erro ao fazer requisição de dados.");
@@ -58,6 +58,7 @@
             }
 
             var alert = function (request) {
+                console.log(request.status)
                 try{
                     if(request.readyState === 4) {
                         if(request.status === 200)
