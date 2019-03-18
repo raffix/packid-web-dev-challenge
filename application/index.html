@@ -40,8 +40,21 @@
         </footer>
         <script type="text/javascript" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
         <script type="text/javascript">
+        var dataSet
             function loadData(data) {
-                console.log(data);
+                
+                dataSet = JSON.parse(data);
+
+                document.getElementById("sensor-name").innerHTML = dataSet.label;
+                document.getElementById("temperature-average").innerHTML = "Faixa de temperatura: " + dataSet.temperature_min + "ºC ~ " + dataSet.temperature_max + "ºC";
+
+                let measurements = dataSet.measurements;
+                document.getElementById("temperature-recent").innerHTML = "Atualmente: " + measurements[0].temperature + "ºC";
+
+                let media = 0.00;
+                measurements.forEach(element => {
+                    
+                });
             }
 
             function requestData () {
@@ -51,24 +64,18 @@
                     alert("Erro ao fazer requisição de dados.");
                     return;
                 }
+                
+                request.onreadystatechange = function () {
+                    try{
+                        if(request.readyState == XMLHttpRequest.DONE && request.status == 200)
+                            loadData(request.responseText);
+                    }catch (e) {
+                        alert("Exceção: " + e.description);
+                    }
+                }
 
-                request.onreadystatechange = alert(request);
                 request.open("GET", url, true);
                 request.send();
-            }
-
-            var alert = function (request) {
-                console.log(request.status)
-                try{
-                    if(request.readyState === 4) {
-                        if(request.status === 200)
-                            loadData(request.responseText);
-                        else
-                            alert("Problema ao fazer requisição.");
-                    }
-                }catch (e) {
-                    alert("Exceção: " + e.description);
-                }
             }
 
             window.onload = function() 
